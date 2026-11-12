@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  日志配置：只输出到控制台。
+
+  说明：早先还配了 logs/app.log 与 logs/error.log 两个文件 appender，
+  本地 demo 阶段用不到，已去掉。以后真要落盘，加一个
+  RollingFileAppender 并挂到 root 上即可（按天 + 50MB 滚动）。
+
+  格式里的 [traceId] 和 [u:userId] 来自 MDC：
+  同一请求的所有日志带同一个 traceId，控制台里一眼能串起来。
+-->
+<configuration>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level [%X{traceId:-no-trace}] [u:%X{userId:-}] %logger{36} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <logger name="com.rj.issuehelper" level="INFO"/>
+    <logger name="com.zaxxer.hikari" level="WARN"/>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</configuration>

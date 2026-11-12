@@ -1,0 +1,54 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: issue-helper
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/issue_helper
+    username: ${DB_USERNAME:root}
+    # 与本地 MySQL 一致的默认值，可用环境变量 DB_PASSWORD 覆盖
+    password: ${DB_PASSWORD:20050603RJ}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 5000
+
+  # 建表脚本手动执行一次即可；设为 always 会每次重启 DROP 表，演示中途数据会丢
+  sql:
+    init:
+      mode: never
+
+  jackson:
+    time-zone: Asia/Shanghai
+    default-property-inclusion: non_null
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    banner: false
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+jwt:
+  # 仅本地演示用；生产必须通过环境变量注入
+  secret: ${JWT_SECRET:issue-helper-demo-secret-please-change-in-prod}
+  # 单位：秒（7 天）
+  timeout: 604800
+
+issuehelper:
+  # 首次启动时若 sys_user 为空，灌入演示账号与 8 条样例反馈
+  seed:
+    enabled: true
+  classifier:
+    # rule = 本地关键词规则，不依赖任何 Key；llm = 预留的模型通道
+    mode: rule
+
+logging:
+  level:
+    com.rj.issuehelper: INFO
