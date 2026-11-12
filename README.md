@@ -8,6 +8,9 @@
 - 📋 原始题目：[要求文档.md](要求文档.md)
 
 ---
+## 视频演示
+[点击查看演示视频](./11月12日.mp4)
+
 
 ## 1. 技术栈
 
@@ -319,3 +322,6 @@ flowchart LR
 │   └── src/main/resources/db/schema.sql
 └── frontend/demo/             # Vue3 + TS 工程
 ```
+
+
+[def]: ./11月12日.mp4
